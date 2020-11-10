@@ -140,7 +140,6 @@
 											} else {
 												if(map[x][y].wandb == 'black' && map[x][y].wandb == map[x - u][y].wandb) {
 													yhq++
-													console.log('black:' + yhq)
 													if(yhq == 4) {
 														alert('黑子赢')
 														location = location
@@ -162,7 +161,6 @@
 											} else {
 												if(map[x][y].wandb == 'black' && map[x][y].wandb == map[x + u][y].wandb) {
 													yhq++
-													console.log('black:' + yhq)
 													if(yhq == 4) {
 														alert('黑子赢')
 														location = location
@@ -186,14 +184,12 @@
 											} else {
 												if(map[x][y].wandb == 'black' && map[x][y].wandb == map[x][y - l].wandb) {
 													xhq++
-													console.log('black:' + xhq)
 													if(xhq == 4) {
 														alert('黑子赢')
 													}
 												}
 												if(map[x][y].wandb == 'white' && map[x][y].wandb == map[x][y - l].wandb) {
 													xbq++
-													console.log('white:' + xbq)
 													if(xbq == 4) {
 														alert('白子赢')
 													}
@@ -207,14 +203,12 @@
 											} else {
 												if(map[x][y].wandb == 'black' && map[x][y].wandb == map[x][y + l].wandb) {
 													xhq++
-													console.log('black:' + xhq)
 													if(xhq == 4) {
 														alert('黑子赢')
 													}
 												}
 												if(map[x][y].wandb == 'white' && map[x][y].wandb == map[x][y + l].wandb) {
 													xbq++
-													console.log('white:' + xbq)
 													if(xbq == 4) {
 														alert('白子赢')
 													}
@@ -230,7 +224,6 @@
 											} else {
 												if(map[x][y].wandb == 'black' && map[x][y].wandb == map[x - l][y - l].wandb) {
 													lhq++
-													console.log('black:' + lhq)
 													if(lhq == 4) {
 														alert('黑子赢')
 														location = location
@@ -252,7 +245,6 @@
 											} else {
 												if(map[x][y].wandb == 'black' && map[x][y].wandb == map[x + l][y + l].wandb) {
 													lhq++
-													console.log('black:' + lhq)
 													if(lhq == 4) {
 														alert('黑子赢')
 														location = location
@@ -276,7 +268,6 @@
 											} else {
 												if(map[x][y].wandb == 'black' && map[x][y].wandb == map[x - r][y + r].wandb) {
 													rhq++
-													console.log('black:' + rhq)
 													if(rhq == 4) {
 														alert('黑子赢')
 														location = location
@@ -298,7 +289,6 @@
 											} else {
 												if(map[x][y].wandb == 'black' && map[x][y].wandb == map[x + r][y - r].wandb) {
 													rhq++
-													console.log('black:' + rhq)
 													if(rhq == 4) {
 														alert('黑子赢')
 														location = location
