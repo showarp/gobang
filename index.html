@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+	</head>
+	<style>
+		* {
+			margin: 0px;
+			padding: 0px;
+		}
+		
+		body {
+			background: gray;
+			display: flex;
+			height: 100vh;
+			width: 100vw;
+			justify-content: center;
+			align-items: center;
+		}
+		
+		#box {
+			background: url(棋盘.png);
+			height: 450px;
+			width: 450px;
+			display: flex;
+			flex-wrap: wrap;
+		}
+		
+		.point {
+			height: 30px;
+			width: 30px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		
+		.white {
+			height: 20px;
+			width: 20px;
+			border-radius: 20px;
+			background: white;
+			box-shadow: inset 0px 0px 0px 1px black;
+		}
+		
+		.black {
+			height: 20px;
+			width: 20px;
+			border-radius: 20px;
+			background: black;
+			box-shadow: inset 0px 0px 0px 1px white;
+		}
+	</style>
+
+	<body>
+		<div id="box"></div>
+	</body>
+	<script>
+		box = document.querySelector('#box')
+		for(let i = 0; i < 15 * 15; i++) {
+			let poin = document.createElement('div')
+			poin.className = 'point'
+			box.appendChild(poin)
+		}
+		point = document.querySelectorAll('.point')
+		map = new Array(15)
+		for(let i = 0; i < map.length; i++) {
+			map[i] = new Array(15)
+		}
+
+		function mp() {
+			let key = 0
+			for(let x = 0; x < map.length; x++) {
+				for(let y = 0; y < map[x].length; y++) {
+					map[x][y] = {
+						k: key,
+						tf: false,
+						wandb: undefined,
+						div: point[key]
+					}
+					key++
+				}
+			}
+		}
+		mp()
+
+		function game() {
+			let play = true
+			point.forEach((i, k) => {
+				i.addEventListener('click', clk)
+
+				function clk() {
+					let poin = document.createElement('div')
+					if(play) {
+						poin.className = 'black'
+						this.appendChild(poin)
+						play = false
+					} else {
+						poin.className = 'white'
+						this.appendChild(poin)
+						play = true
+					}
+					for(x of map) {
+						for(y of x) {
+							if(y.div.querySelectorAll('div').length >= 1) {
+								y.tf = true
+							}
+							if(y.tf == true) {
+								i.removeEventListener('click', clk)
+								if(y.div.querySelector('div').className == 'black') {
+									y.wandb = 'black'
+								}
+								if(y.div.querySelector('div').className == 'white') {
+									y.wandb = 'white'
+								}
+							}
+						}
+					}
+
+					function pd() {
+						for(let x = 0; x < map.length; x++) {
+							for(let y = 0; y < map[x].length; y++) {
+								var yhq = 0
+								var ybq = 0
+								var xhq = 0
+								var xbq = 0
+								var lhq = 0
+								var lbq = 0
+								var rhq = 0
+								var rbq = 0
+								if(map[x][y].tf == true) {
+									//y
+									if(x > 5) {
+										for(let u = 1; u < 5; u++) {
+											if(!map[x - u][y].tf) {
+												break
+											} else {
+												if(map[x][y].wandb == 'black' && map[x][y].wandb == map[x - u][y].wandb) {
+													yhq++
+													console.log('black:' + yhq)
+													if(yhq == 4) {
+														alert('黑子赢')
+														location = location
+													}
+												}
+												if(map[x][y].wandb == 'white' && map[x][y].wandb == map[x - u][y].wandb) {
+													ybq++
+													if(ybq == 4) {
+														alert('白子赢')
+														location = location
+													}
+												}
+											}
+										}
+									} else {
+										for(let u = 1; u < 5; u++) {
+											if(!map[x + u][y].tf) {
+												break
+											} else {
+												if(map[x][y].wandb == 'black' && map[x][y].wandb == map[x + u][y].wandb) {
+													yhq++
+													console.log('black:' + yhq)
+													if(yhq == 4) {
+														alert('黑子赢')
+														location = location
+													}
+												}
+												if(map[x][y].wandb == 'white' && map[x][y].wandb == map[x + u][y].wandb) {
+													ybq++
+													if(ybq == 4) {
+														alert('白子赢')
+														location = location
+													}
+												}
+											}
+										}
+									}
+									//x
+									if(y > 5) {
+										for(let l = 1; l < 5; l++) {
+											if(!map[x][y - l].tf) {
+												break
+											} else {
+												if(map[x][y].wandb == 'black' && map[x][y].wandb == map[x][y - l].wandb) {
+													xhq++
+													console.log('black:' + xhq)
+													if(xhq == 4) {
+														alert('黑子赢')
+													}
+												}
+												if(map[x][y].wandb == 'white' && map[x][y].wandb == map[x][y - l].wandb) {
+													xbq++
+													console.log('white:' + xbq)
+													if(xbq == 4) {
+														alert('白子赢')
+													}
+												}
+											}
+										}
+									} else {
+										for(let l = 1; l < 5; l++) {
+											if(!map[x][y + l].tf) {
+												break
+											} else {
+												if(map[x][y].wandb == 'black' && map[x][y].wandb == map[x][y + l].wandb) {
+													xhq++
+													console.log('black:' + xhq)
+													if(xhq == 4) {
+														alert('黑子赢')
+													}
+												}
+												if(map[x][y].wandb == 'white' && map[x][y].wandb == map[x][y + l].wandb) {
+													xbq++
+													console.log('white:' + xbq)
+													if(xbq == 4) {
+														alert('白子赢')
+													}
+												}
+											}
+										}
+									}
+								//l
+									if(x>5&&y>5) {
+										for(let l = 1; l < 5; l++) {
+											if(!map[x - l][y - l].tf) {
+												break
+											} else {
+												if(map[x][y].wandb == 'black' && map[x][y].wandb == map[x - l][y - l].wandb) {
+													lhq++
+													console.log('black:' + lhq)
+													if(lhq == 4) {
+														alert('黑子赢')
+														location = location
+													}
+												}
+												if(map[x][y].wandb == 'white' && map[x][y].wandb == map[x - l][y - l].wandb) {
+													lbq++
+													if(lbq == 4) {
+														alert('白子赢')
+														location = location
+													}
+												}
+											}
+										}
+									} else {
+										for(let l = 1; l < 5; l++) {
+											if(!map[x + l][y + l].tf) {
+												break
+											} else {
+												if(map[x][y].wandb == 'black' && map[x][y].wandb == map[x + l][y + l].wandb) {
+													lhq++
+													console.log('black:' + lhq)
+													if(lhq == 4) {
+														alert('黑子赢')
+														location = location
+													}
+												}
+												if(map[x][y].wandb == 'white' && map[x][y].wandb == map[x + l][y + l].wandb) {
+													lbq++
+													if(lbq == 4) {
+														alert('白子赢')
+														location = location
+													}
+												}
+											}
+										}
+									}
+								//r
+								if(x>5&&y>5) {
+										for(let r = 1; r < 5; r++) {
+											if(!map[x - r][y + r].tf) {
+												break
+											} else {
+												if(map[x][y].wandb == 'black' && map[x][y].wandb == map[x - r][y + r].wandb) {
+													rhq++
+													console.log('black:' + rhq)
+													if(rhq == 4) {
+														alert('黑子赢')
+														location = location
+													}
+												}
+												if(map[x][y].wandb == 'white' && map[x][y].wandb == map[x - r][y + r].wandb) {
+													rbq++
+													if(rbq == 4) {
+														alert('白子赢')
+														location = location
+													}
+												}
+											}
+										}
+									} else {
+										for(let r = 1; r < 5; r++) {
+											if(!map[x + r][y - r].tf) {
+												break
+											} else {
+												if(map[x][y].wandb == 'black' && map[x][y].wandb == map[x + r][y - r].wandb) {
+													rhq++
+													console.log('black:' + rhq)
+													if(rhq == 4) {
+														alert('黑子赢')
+														location = location
+													}
+												}
+												if(map[x][y].wandb == 'white' && map[x][y].wandb == map[x + r][y - r].wandb) {
+													rbq++
+													if(rbq == 4) {
+														alert('白子赢')
+														location = location
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					pd()
+				}
+			})
+		}
+		game()
+	</script>
+
+</html>
